@@ -17,7 +17,7 @@ reduce-events 的实现仅有少量代码，这意味着它也是轻量级的
 reduce-events 托管在 NPM 上，执行以下命令安装
 
 ```js
-
+npm install reduce-events.js --save
 ```
 
 接下来就可以在代码里面引入了
@@ -195,7 +195,7 @@ NPM
 reduce-events is hosted on NPM, run the following command to install
 
 ```js
-
+npm install reduce-events.js --save
 ```
 
 Then you can introduce it in the code
