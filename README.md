@@ -7,7 +7,9 @@
 ### reduce-events.js 是什么
 
 reduce-events 是一个用来解决浏览器的 resize 类似事件的重复触发过多，从而导致页面卡顿的场景
+
 reduce-events 是使用纯 JavaScript 实现的，这意味着它是无依赖的
+
 reduce-events 的实现仅有少量代码，这意味着它也是轻量级的
 
 ### 安装
@@ -74,6 +76,7 @@ window.addEventListener("resize", eventMethod);
    > 如果**forceOut**遇见了最后一次触发的时机,则只有**forceOut**会触发
    > 比如第 20 是最后一次触发的时间点，但是**forceOut**设置的是 20，则只会触发后者
 6. **type**
+
    ```js
    const eventMethod = throttleVal.bind(
      null,
@@ -83,8 +86,11 @@ window.addEventListener("resize", eventMethod);
      obj
    );
    ```
+
    我们自定义的事件，会接收到 2 个参数，分别为 type 和 event
+
    type：触发此次事件的类型，一共有 2 种，**forceOut**触发和正常触发，值分别为：forceOut、stop
+
    event：触发此次事件的事件对象
 
 ### 常用场景
@@ -248,7 +254,9 @@ At this point, one has been initialized. When the browser keeps triggering the r
    The value used internally by reduce-events, the initial value is false
 5. **forceOut**
    If there is a need, we need to trigger our custom event every few times. At this time, we can use **forceOut**. ForceOut is used to control every few events, and we must force our custom event to trigger once. The default value It is 100. In most cases, 100 cannot be triggered. If you encounter this scene, you can lower this parameter.
+
    > Note: When forceOut fires our custom event, the internal state will be cleared. If forceOut meets the timing of the last trigger, only forceOut will trigger. For example, the 20th is the time point of the last trigger, but if forceOut is set to 20, only the latter will be triggered.
+
 6. **type**
    ```js
    const eventMethod = throttleVal.bind(
