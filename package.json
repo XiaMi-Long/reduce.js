@@ -1,0 +1,27 @@
+{
+  "name": "reduce-events.js",
+  "version": "1.0.0",
+  "description": "js 减少重复执行事件的次数",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XiaMi-Long/reduce.js.git"
+  },
+  "keywords": [
+    "reduce",
+    "resize",
+    "js"
+  ],
+  "author": "luo-qixi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/XiaMi-Long/reduce.js/issues"
+  },
+  "homepage": "https://github.com/XiaMi-Long/reduce.js#readme",
+  "devDependencies": {},
+  "dependencies": {}
+}
