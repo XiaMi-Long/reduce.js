@@ -1,3 +1,5 @@
+**English documentation is below**
+
 # 介绍
 
 [TOC]
@@ -163,6 +165,182 @@ window.addEventListener(
 );
 
 // wanr：无效
+window.addEventListener(
+  "resize",
+  throttleVal.bind(
+    null,
+    function () {
+      console.log(1);
+    },
+    obj
+  )
+);
+```
+
+# **machine translation**:
+
+## Introduce
+
+### what is reduce-events.js
+
+reduce-events is a scenario in which the browser's resize-like events are repeatedly triggered too much, resulting in page freezes
+
+reduce-events is implemented using pure JavaScript, which means it is dependency free
+
+The implementation of reduce-events has only a small amount of code, which means it is also lightweight
+
+### Install
+
+NPM
+reduce-events is hosted on NPM, run the following command to install
+
+```js
+
+```
+
+Then you can introduce it in the code
+
+```js
+import throttleVal from "reduce-events.js";
+```
+
+### Start
+
+The most common application scenario of reduce-events is when you listen to the browser's resize event and want to reduce the corresponding trigger frequency
+
+#### Init code
+
+```js
+import throttleVal from "reduce-events.js";
+
+const obj = {
+  outTime: 250,
+  loopCount: 0,
+  compareCount: 0,
+  startLoop: false,
+  forceOut: 100,
+  reset: null,
+};
+
+const eventMethod = throttleVal.bind(
+  null,
+  function (type, event) {
+    console.log(type, event);
+  },
+  obj
+);
+
+window.addEventListener("resize", eventMethod);
+```
+
+At this point, one has been initialized. When the browser keeps triggering the resize event, our event processing will only be executed at the last trigger.
+
+#### Parameter Configuration
+
+1. **outTime**
+   reduce-events uses setTimeout internally for processing, this parameter is used to control the third parameter of setTimeout
+   The smaller this parameter is, the faster our custom event is triggered when it is triggered for the last time. However, it is not recommended that this parameter is too small. If it is too small, it may cause it to fail to respond when it is triggered for the last time. It is recommended that the default value or turn up
+2. **loopCount**
+   The value used internally by reduce-events, the initial value is 0, and the value of **loopCount** must be equal to **compareCount** when initialized
+3. **compareCount**
+   The value used internally by reduce-events, the initial value is 0, and the value of **compareCount** must be equal to **loopCount** when initialized
+4. **startLoop**
+   The value used internally by reduce-events, the initial value is false
+5. **forceOut**
+   If there is a need, we need to trigger our custom event every few times. At this time, we can use **forceOut**. ForceOut is used to control every few events, and we must force our custom event to trigger once. The default value It is 100. In most cases, 100 cannot be triggered. If you encounter this scene, you can lower this parameter.
+   > Note: When forceOut fires our custom event, the internal state will be cleared. If forceOut meets the timing of the last trigger, only forceOut will trigger. For example, the 20th is the time point of the last trigger, but if forceOut is set to 20, only the latter will be triggered.
+6. **type**
+   ```js
+   const eventMethod = throttleVal.bind(
+     null,
+     function (type, event) {
+       console.log(type, event);
+     },
+     obj
+   );
+   ```
+   Our custom event will receive 2 parameters, namely type and event
+   type: The type of triggering this event, there are 2 types, **forceOut** trigger and normal trigger, the values ​​are: forceOut, stop
+   event: the event object that triggered this event
+
+### Common scenarios
+
+#### delete bound event
+
+If we want to delete events created by reduce-events
+
+```js
+const eventMethod = throttleVal.bind(
+  null,
+  function () {
+    console.log(2);
+  },
+  obj
+);
+
+window.addEventListener("resize", eventMethod);
+window.removeEventListener("resize", eventMethod);
+```
+
+#### Bind multiple handlers to the same event
+
+If we want to give an event, bind multiple event handlers
+
+```js
+const eventMethod = throttleVal.bind(
+  null,
+  function () {
+    console.log(1);
+  },
+  obj
+);
+
+const eventMethod2 = throttleVal.bind(
+  null,
+  function () {
+    console.log(2);
+  },
+  // warn：这里不要采用和eventMethod同样的obj对象
+  Object.assign({}, obj)
+);
+
+window.addEventListener("resize", eventMethod);
+window.addEventListener("resize", eventMethod2);
+```
+
+### Precautions
+
+1. Precautions When binding multiple handlers, the configuration object of each event handler must not use the same one
+2. The configuration object is required, and the parameters in it must have
+3. Must be bound in the following way
+
+```js
+const eventMethod = throttleVal.bind(
+  null,
+  function () {
+    console.log(1);
+  },
+  obj
+);
+
+window.addEventListener("resize", eventMethod);
+```
+
+If you use the following method, you will not be able to clear the bound event
+
+```js
+window.addEventListener(
+  "resize",
+  throttleVal.bind(
+    null,
+    function () {
+      console.log(1);
+    },
+    obj
+  )
+);
+
+// wanr：invalid
 window.addEventListener(
   "resize",
   throttleVal.bind(
